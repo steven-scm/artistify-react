@@ -54,9 +54,27 @@ router.get("/filtered-artists", (req, res, next) => {
   res.status(200).json({ msg: "@todo" })
 });
 
+// router.post("/artists", (req, res) => {
+//   res.status(200).json({ msg: "@todo" })
+// });
+
 router.post("/artists", (req, res) => {
-  res.status(200).json({ msg: "@todo" })
+  const { name, description, style, isBand } = req.body;
+  artistModel.create({ name, description, style, isBand })
+    .then(response => res.json(response))
+    .catch(err => res.json(err));
 });
+
+// router.post('/projects', (req, res, next) => {
+//   const { title, description } = req.body;
+//   Project.create({ title, description, tasks: [] })
+//     .then(response => res.json(response))
+//     .catch(err => res.json(err));
+// });
+
+
+
+
 
 router.patch("/artists/:id", async (req, res, next) => {
   res.status(200).json({ msg: "@todo" })

@@ -7,6 +7,9 @@ const router = new express.Router();
 const albumModel = require("../models/Album");
 const uploader = require("./../config/cloudinary");
 
+const artistModel = require("../models/Artist");
+const labelModel = require("../models/Label");
+
 const getAverageRate = async idAlbum => {
   // use agregate features @ mongo db to code this feature
   // https://docs.mongodb.com/manual/aggregation/
@@ -56,9 +59,30 @@ router.get("/albums/:id", (req, res, next) => {
   res.status(200).json({ msg: "@todo" })
 });
 
-router.post("/albums", uploader.single("cover"), (req, res, next) => {
-  res.status(200).json({ msg: "@todo" })
+// router.post("/albums", uploader.single("cover"), (req, res, next) => {
+//   res.status(200).json({ msg: "@todo" })
+// });
+
+// router.post("/albums", uploader.single("cover"), (req, res, next) => {
+//   const newAlbum = req.body;
+
+//   if (req.file) newAlbum.cover = req.file.secure_url;
+//   albumModel
+//     .create(newAlbum) // use the model and try doc insertion in database
+//     .then(() => res.json(newAlbum))
+//     .catch(next);
+// });
+
+router.post("/albums", (req, res) => {
+  const { title, releaseDate, artist, cover, description, label } = req.body;
+  albumModel.create({ title, releaseDate, artist, cover, description, label })
+    .then(response => res.json(response))
+    .catch(err => res.json(err));
 });
+
+
+
+
 
 router.patch("/albums/:id", uploader.single("cover"), (req, res, next) => {
   res.status(200).json({ msg: "@todo" })
